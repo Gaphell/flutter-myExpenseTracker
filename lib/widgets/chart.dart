@@ -52,10 +52,11 @@ class Chart extends StatelessWidget {
             return Flexible(
               fit: FlexFit.tight,
               child: ChartBar(
-                group['day'],
-                group['amount'],
-                maxSpending == 0 ? 0 : (group['amount'] as double) / maxSpending
-              ),
+                  group['day'],
+                  group['amount'],
+                  maxSpending == 0
+                      ? 0
+                      : (group['amount'] as double) / maxSpending),
             );
           }).toList(),
         ),
