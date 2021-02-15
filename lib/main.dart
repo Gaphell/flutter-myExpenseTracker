@@ -51,7 +51,24 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   final List<Transaction> _transactions = [
     // Transaction(
     //   id: 'a',
@@ -117,8 +134,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  List<Widget> _buildLandscaapeContent(
-      MediaQueryData mediaQuery, PreferredSizeWidget appBar, Widget transactionListWidget) {
+  List<Widget> _buildLandscaapeContent(MediaQueryData mediaQuery,
+      PreferredSizeWidget appBar, Widget transactionListWidget) {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
         height: (mediaQuery.size.height -
                 appBar.preferredSize.height -
                 mediaQuery.padding.top) *
-            0.3,
+            0.2,
       ),
       transactionListWidget
     ];
@@ -208,7 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: SingleChildScrollView(
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           if (isLandscapte)
             ..._buildLandscaapeContent(
